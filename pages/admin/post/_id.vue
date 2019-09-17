@@ -7,13 +7,13 @@
 
     <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="submit">
       <el-form-item label="Text .md .html" prop="text">
-        <el-input type="textarea" resize="none" :rows="10" v-model.trim="controls.text" />
+        <el-input type="textarea" resize="none" :rows="10" v-model="controls.text" />
       </el-form-item>
 
       <div class="mb-2">
         <small class="mr-1">
           <i class="el-icon-time"></i>
-          <span>{{ new Date(post.date).toLocaleString() }}</span>
+          <span>{{ post.date | date }}</span>
         </small>
 
         <small >
@@ -39,7 +39,7 @@ export default {
 
   head() {
     return {
-      title: `Post | ${this.post ? this.post.title : ''}`
+      title: `${this.post ? this.post.title : ''} | ${process.env.appName}`
     }
   },
 
@@ -59,6 +59,10 @@ export default {
       ],
     }
   }),
+
+  mounted() {
+    this.controls.text = this.post.text;
+  },
 
   methods: {
     submit() {

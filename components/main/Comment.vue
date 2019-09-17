@@ -1,44 +1,36 @@
 <template>
   <el-card class="comment">
     <div class="comment-header">
-      <span>Person name</span>
-        <i class="el-icon-time">
-          {{ new Date().toLocaleString() }}
-        </i>
+      <span>{{ comment.name }}</span>
+      <i class="el-icon-time"> {{ comment.date | date }}</i>
     </div>
-    <div class="comment-text">Lorem ipsum dolor sit amet.</div>
+    <div class="comment-text">{{ comment.text }}</div>
   </el-card>
 </template>
 
 <script>
-  export default {
-    name: 'Comment',
+export default {
+  name: 'Comment',
 
-    props: {
-      comment: null,
-    },
-
-    data: () => ({}),
-
-    computed: {},
-
-    methods: {},
-  }
+  props: {
+    comment: { type: Object, required: true },
+  },
+}
 </script>
 
 <style scoped lang="scss">
-  .comment {
-    margin-bottom: 1rem;
+.comment {
+  margin-bottom: 1rem;
 
-    &-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 5rem;
-      font-size: .8rem;
-    }
-
-    &-text {
-      white-space: pre-line;
-    }
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+    font-size: .8rem;
   }
+
+  &-text {
+    white-space: pre-line;
+  }
+}
 </style>

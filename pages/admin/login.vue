@@ -23,6 +23,10 @@ export default {
 
   layout: 'empty',
 
+  head: {
+    title: `Admin enter | ${process.env.appName}`
+  },
+
   data: () => ({
     loading: false,
     controls: {
@@ -50,6 +54,9 @@ export default {
       case 'logout':
         this.$message.success('You are logout');
         break;
+      case 'session':
+        this.$message.warning('Session time is over');
+        break;
     }
   },
 
@@ -60,11 +67,7 @@ export default {
           this.loading = true;
 
           try {
-            const formData = {
-              ...this.controls,
-            };
-
-            await this.$store.dispatch('auth/login', formData);
+            await this.$store.dispatch('auth/login', { ...this.controls });
 
             this.$router.push('/admin')
           } catch (e) {

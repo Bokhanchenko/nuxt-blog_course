@@ -1,7 +1,7 @@
 // bcrypt-nodejs - для шифрования данных (токена)
 const bcrypt = require('bcrypt-nodejs');
 // jsonwebtoken - для формирования токена
-const jwt =require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const keys = require('../keys');
 const User = require('../models/user.model');
 

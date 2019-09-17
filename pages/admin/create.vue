@@ -33,7 +33,6 @@
       </el-form-item>
     </el-form>
 
-
     <el-dialog
       title="Before view"
       :visible.sync="preview"
@@ -43,7 +42,6 @@
         <vue-markdown>{{ controls.text }}</vue-markdown>
       </div>
     </el-dialog>
-
   </div>
 </template>
 
@@ -55,6 +53,10 @@ export default {
 
   middleware:['admin-auth'],
 
+  head: {
+    title: `New Post | ${process.env.appName}`
+  },
+
   data: () => ({
     preview: false,
     loading: false,
@@ -62,7 +64,7 @@ export default {
     controls: {
       title: '',
       text: '',
-      img: null,
+      image: null,
     },
     rules: {
       title: [
@@ -85,7 +87,8 @@ export default {
           this.loading = true;
 
           try {
-            await this.$store.dispatch('post/create', { ...this.controls, image: this.image });
+            const { controls, image } = this;
+            await this.$store.dispatch('post/create', { ...controls, image });
 
             this.controls.title = '';
             this.controls.text = '';

@@ -4,10 +4,10 @@
 
     <div class="mb-2">
       <el-form-item label="Name" prop="name">
-        <el-input v-model.trim="controls.name" />
+        <el-input v-model="controls.name" />
       </el-form-item>
       <el-form-item label="Comment" prop="text">
-        <el-input type="textarea" v-model.trim="controls.text" resize="none" :rows="2" />
+        <el-input type="textarea" v-model="controls.text" resize="none" :rows="2" />
       </el-form-item>
     </div>
 
@@ -20,6 +20,10 @@
 <script>
 export default {
   name: 'CommentForm',
+
+  props: {
+    postId: { type: String, required: true },
+  },
 
   data: () => ({
     loading: false,
@@ -39,19 +43,19 @@ export default {
 
   methods: {
     submit() {
-      this.$refs.form.validate((valid) => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
           this.loading = true;
 
-          const fromData = {
-            ...this.controls,
-            postId: '',
-          };
+          const data = { ...this.controls, postId: this.postId, };
 
           try {
+            const newComment = await this.$store.dispatch('comment/create', data);
             this.$message.success('Comment was added');
-            this.$emit('created');
+            this.$emit('created', newComment);
           } catch (e) {
+            console.log(e)
+          } finally {
             this.loading = false;
           }
         } else {
@@ -63,7 +67,3 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>

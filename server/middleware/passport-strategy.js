@@ -1,8 +1,8 @@
 const { Strategy, ExtractJwt } = require('passport-jwt');
-const { model } = require('mongoose');
+// const { model } = require('mongoose');
 const keys = require('../keys');
-
-const User = model('users');
+// const User = model('users');
+const User = require('../models/user.model');
 
 // Autherization: Bearer fkwewrfwr.wtgw3gwgw3gw3gw3g
 const options = {

@@ -1,29 +1,33 @@
 <template>
   <el-row type="flex" justify="center">
-    <el-col :xs="24" :sm="18" :md="12" :lg="10">
-      <Post v-for="post in 3" :key="post" :post="post" />
+    <el-col :xs="24" :sm="18" :md="12" :lg="10" v-if="posts">
+      <Post v-for="post in posts" :key="post._id" :post="post" />
     </el-col>
   </el-row>
 </template>
 
 <script>
-  import Post from '@/components/main/Post'
+import Post from '@/components/main/Post'
 
-  export default {
-    name: 'Posts',
+export default {
+  name: 'Posts',
 
-    head: {
-      title: 'Главная',
-    },
+  head: {
+    title: `Главная | ${process.env.appName}`,
+    // For SEO
+    meta: [
+      { hid: 'homepaged', name: 'description', content: 'The best JS BOG' },
+      { hid: 'homepagek', name: 'keywords', content: 'Blog, js, nuxt' }
+    ]
+  },
 
-    components: {
-      Post
-    },
+  async asyncData({ store }) {
+    const posts = await store.dispatch('post/fetch');
+    return { posts };
+  },
 
-    data: () => ({
-      posts: [
-        { id: 1, title: 'Post 1', date: new Date() }
-      ]
-    })
-  }
+  components: {
+    Post
+  },
+}
 </script>

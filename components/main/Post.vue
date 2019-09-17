@@ -1,28 +1,23 @@
 <template>
   <el-card shadow="hover" :body-style="{ padding: 0 }" class="post">
     <header slot="header" class="post-header">
-      <h3>Post Title</h3>
+      <h3>{{ post.title }}</h3>
 
       <small>
-        <i class="el-icon-time">
-          {{ new Date().toLocaleString() }}
-        </i>
+        <i class="el-icon-time"> {{ post.date | date('date') }}</i>
       </small>
     </header>
 
     <div>
-      <img
-        class="post-img"
-        src="https://www.berlin.de/binaries/asset/image_assets/5719603/ratio_2_1/1560241983/624x312/"
-        alt="post img"
-      >
+      <img class="post-img" :src="post.imageUrl" alt="post img">
     </div>
 
     <footer class="post-footer">
-      <el-button type="primary" round @click="openPost()">Open Post</el-button>
+      <el-button type="primary" round @click="openPost(post._id)">Open Post</el-button>
 
       <span>
         <i class="el-icon-message"></i>
+        {{ post.comments.length }}
       </span>
     </footer>
   </el-card>
@@ -33,37 +28,37 @@
     name: 'PostCard',
 
     props: {
-      post: { type: Number, required: true },
+      post: { type: Object, required: true },
     },
 
     methods: {
-      openPost(post) {
-        this.$router.push(`/post-card/${this.post}`)
+      openPost(id) {
+        this.$router.push(`/post-card/${id}`)
       }
     },
   }
 </script>
 
 <style scoped lang="scss">
-  .post {
-    margin-bottom: 1.5rem;
+.post {
+  margin-bottom: 1.5rem;
 
-    &-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    &-img {
-      width: 100%;
-      height: auto;
-    }
-
-    &-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem;
-    }
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
+
+  &-img {
+    width: 100%;
+    height: auto;
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+}
 </style>

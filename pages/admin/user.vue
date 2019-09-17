@@ -23,6 +23,10 @@
 
     middleware:['admin-auth'],
 
+    head: {
+      title: `New User | ${process.env.appName}`
+    },
+
     data: () => ({
       loading: false,
       controls: {
@@ -52,9 +56,9 @@
               this.$message.success('User created');
               this.controls.login = '';
               this.controls.password = '';
-              this.loading = false;
             } catch (e) {
               console.log(e);
+            } finally {
               this.loading = false;
             }
           } else {

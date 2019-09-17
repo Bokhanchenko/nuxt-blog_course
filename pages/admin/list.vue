@@ -5,14 +5,14 @@
     <el-table-column label="Date">
       <template slot-scope="{ row }">
         <i class="el-icon-time"></i>
-        <span style="margin-left: 10px">{{ row.date.toLocaleString() }}</span>
+        <span class="ml-1"> {{ row.date | date }}</span>
       </template>
     </el-table-column>
 
     <el-table-column prop="views" label="Views">
       <template slot-scope="{ row }">
         <i class="el-icon-view" />
-        <span>{{ row.views }}</span>
+        <span> {{ row.views }}</span>
       </template>
     </el-table-column>
 
@@ -43,7 +43,11 @@ export default {
 
   layout: 'admin',
 
-  middleware:['admin-auth'],
+  middleware: ['admin-auth'],
+
+  head: {
+    title: `All Posts | ${process.env.appName}`
+  },
 
   // need to rewrite to fetch))
   async asyncData({ store }) {
@@ -66,11 +70,11 @@ export default {
 
         await this.$store.dispatch('post/remove', id);
 
-        this.posts = this.posts.filter(p => p._id !== id);
+        // this.posts = this.posts.filter(p => p._id !== id);
 
         this.$message.success('Post removed')
       } catch (e) {
-
+        console.error(e)
       }
     }
   }
